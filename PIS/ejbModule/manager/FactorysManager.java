@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import exceptions.NoSuchFactory;
+import exceptions.NoSuchRow;
 import model.Factorys;
 
 public class FactorysManager {
@@ -31,11 +31,11 @@ public class FactorysManager {
 		return factorysCollection;
 	}
 	
-	public Factorys findByPrimaryKey(int primaryKey) throws NoSuchFactory{
+	public Factorys findByPrimaryKey(int primaryKey) throws NoSuchRow{
 		Factorys factorys = em.find(Factorys.class, primaryKey);	
 		
 		if (factorys == null){
-			throw new NoSuchFactory();
+			throw new NoSuchRow("Factorys");
 		}
 		else{
 			return factorys;
