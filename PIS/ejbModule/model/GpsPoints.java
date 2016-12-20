@@ -14,16 +14,16 @@ public class GpsPoints implements Serializable {
 
 	@Id
 	@Column(name = "GpsPoint")
-	public int gpsPoint;
+	private int gpsPoint;
 	
 	@Column(name = "Longitude")
-	public float longitude;
+	private float longitude;
 	
 	@Column(name = "Latitude")
-	public float latitude;
+	private float latitude;
 	
 	@Column(name = "Altitude")
-	public float altitude;
+	private float altitude;
 	
     public int getGpsPoint() {
 		return gpsPoint;
