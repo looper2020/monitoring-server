@@ -1,10 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -33,6 +38,10 @@ public class Factorys implements Serializable {
 	
 	@Column(name = "StaffID")
 	private int staffID;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Factory_ID", referencedColumnName = "Factory_ID")
+	private Collection<Buildings> allBuildings;
 
 	public int getFactoryID() {
 		return factoryID;
@@ -89,16 +98,24 @@ public class Factorys implements Serializable {
 	public void setStaffID(int staffID) {
 		this.staffID = staffID;
 	}
+	
+	public Collection<Buildings> getAllBuildings() {
+		return allBuildings;
+	}
+
+	public void setAllBuildings(Collection<Buildings> allBuildings) {
+		this.allBuildings = allBuildings;
+	}
 
 	@Override
 	public String toString() {
-		return "Factorys [factoryID=" + factoryID + ", name=" + name + ", LocationID=" + locationID + ", surfaceID="
+		return "Factorys [factoryID=" + factoryID + ", name=" + name + ", locationID=" + locationID + ", surfaceID="
 				+ surfaceID + ", addressID=" + addressID + ", permissionID=" + permissionID + ", staffID=" + staffID
-				+ "]";
+				+ ", allBuildings=" + allBuildings + "]";
 	}
 
 	public Factorys(int factoryID, String name, int locationID, int surfaceID, int addressID, int permissionID,
-			int staffID) {
+			int staffID, Collection<Buildings> allBuildings) {
 		super();
 		this.factoryID = factoryID;
 		this.name = name;
@@ -107,6 +124,7 @@ public class Factorys implements Serializable {
 		this.addressID = addressID;
 		this.permissionID = permissionID;
 		this.staffID = staffID;
+		this.allBuildings = allBuildings;
 	}
 
 	public Factorys() {

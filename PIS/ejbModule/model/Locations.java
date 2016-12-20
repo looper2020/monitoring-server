@@ -1,10 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -32,7 +37,19 @@ public class Locations implements Serializable {
 	private int permissionID;
 	
 	@Column(name = "StaffID")
-	private int StaffID;
+	private int staffID;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Location_ID", referencedColumnName = "Location_ID")
+	private Collection<Factorys> allFactorys;
+
+	public Collection<Factorys> getAllFactorys() {
+		return allFactorys;
+	}
+
+	public void setAllFactorys(Collection<Factorys> allFactorys) {
+		this.allFactorys = allFactorys;
+	}
 	
   	public int getLocationID() {
 		return locationID;
@@ -78,20 +95,19 @@ public class Locations implements Serializable {
 		this.permissionID = permissionID;
 	}
 
-	public int getStaffID() {
-		return StaffID;
-	}
-
-	public void setStaffID(int staffID) {
-		StaffID = staffID;
-	}
-
 	public void setLocationID(int locationID) {
 		this.locationID = locationID;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Locations [locationID=" + locationID + ", name=" + name + ", country=" + country + ", surfaceID="
+				+ surfaceID + ", addressID=" + addressID + ", permissionID=" + permissionID + ", staffID=" + staffID
+				+ ", allFactorys=" + allFactorys + "]";
+	}
+
 	public Locations(int locationID, String name, String country, int surfaceID, int addressID, int permissionID,
-			int staffID) {
+			int staffID, Collection<Factorys> allFactorys) {
 		super();
 		this.locationID = locationID;
 		this.name = name;
@@ -99,17 +115,11 @@ public class Locations implements Serializable {
 		this.surfaceID = surfaceID;
 		this.addressID = addressID;
 		this.permissionID = permissionID;
-		StaffID = staffID;
+		this.staffID = staffID;
+		this.allFactorys = allFactorys;
 	}
 
-	@Override
-	public String toString() {
-		return "Locations [locationID=" + locationID + ", name=" + name + ", country=" + country + ", surfaceID="
-				+ surfaceID + ", addressID=" + addressID + ", permissionID=" + permissionID + ", StaffID=" + StaffID
-				+ "]";
-	}
-
-    public Locations() {
+	public Locations() {
     	
     }
 }

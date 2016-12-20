@@ -1,10 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -33,6 +38,10 @@ public class Buildings implements Serializable {
 	
 	@Column(name = "StaffID")
 	private int staffID;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Building_ID", referencedColumnName = "Building_ID")
+	private Collection<Rooms> allRooms;
 
 	public int getBuildingID() {
 		return buildingID;
@@ -90,8 +99,23 @@ public class Buildings implements Serializable {
 		this.staffID = staffID;
 	}
 
+	public Collection<Rooms> getAllRooms() {
+		return allRooms;
+	}
+
+	public void setAllRooms(Collection<Rooms> allRooms) {
+		this.allRooms = allRooms;
+	}
+
+	@Override
+	public String toString() {
+		return "Buildings [buildingID=" + buildingID + ", name=" + name + ", factoryID=" + factoryID + ", surfaceID="
+				+ surfaceID + ", addressID=" + addressID + ", permissionID=" + permissionID + ", staffID=" + staffID
+				+ ", allRooms=" + allRooms + "]";
+	}
+	
 	public Buildings(int buildingID, String name, int factoryID, int surfaceID, int addressID, int permissionID,
-			int staffID) {
+			int staffID, Collection<Rooms> allRooms) {
 		super();
 		this.buildingID = buildingID;
 		this.name = name;
@@ -100,6 +124,7 @@ public class Buildings implements Serializable {
 		this.addressID = addressID;
 		this.permissionID = permissionID;
 		this.staffID = staffID;
+		this.allRooms = allRooms;
 	}
 
 	public Buildings() {

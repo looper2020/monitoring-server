@@ -1,10 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -33,6 +38,10 @@ public class Rooms implements Serializable{
 	
 	@Column(name = "StaffID")
 	private int staffID;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Room_ID", referencedColumnName = "Room_ID")
+	private Collection<MachineMasterData> allMachines;
 
 	public int getRoomID() {
 		return roomID;
@@ -93,10 +102,12 @@ public class Rooms implements Serializable{
 	@Override
 	public String toString() {
 		return "Rooms [roomID=" + roomID + ", name=" + name + ", buildingID=" + buildingID + ", surfaceID=" + surfaceID
-				+ ", addressID=" + addressID + ", permissionID=" + permissionID + ", staffID=" + staffID + "]";
+				+ ", addressID=" + addressID + ", permissionID=" + permissionID + ", staffID=" + staffID
+				+ ", allMachines=" + allMachines + "]";
 	}
 
-	public Rooms(int roomID, String name, int buildingID, int surfaceID, int addressID, int permissionID, int staffID) {
+	public Rooms(int roomID, String name, int buildingID, int surfaceID, int addressID, int permissionID, int staffID,
+			Collection<MachineMasterData> allMachines) {
 		super();
 		this.roomID = roomID;
 		this.name = name;
@@ -105,6 +116,7 @@ public class Rooms implements Serializable{
 		this.addressID = addressID;
 		this.permissionID = permissionID;
 		this.staffID = staffID;
+		this.allMachines = allMachines;
 	}
 
 	public Rooms() {
