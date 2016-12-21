@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
 
-@SuppressWarnings("serial")
+//@SuppressWarnings("serial")
 @Entity
 @Table(name = "AdditionalMasterData")
 public class AdditionalMasterData implements Serializable {
